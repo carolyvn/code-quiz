@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <a href="" id="viewHighScore">View Highscores</a>
+        <p id="currentTime">Times: <span id="timer"></span></p>
+        </ul>    
+    </header>
+
+    <main class="container">
+        <!--Intro div-->
+        <div id="introDiv">
+            <h1>Coding Quiz Challenge</h1>
+            <p>
+                Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds! 
+            </p>
+            <button type="button" id="start">Start Quiz</button>
+        </div>
+
+        <!--Quiz div-->
+        <div id="quizDiv">
+            <h2 id="questionTitle"></h2>
+            <ol id="choices">
+                <li><button id="choice-1" type="button"></button></li>
+                <li><button id="choice-2" type="button"></button></li>
+                <li><button id="choice-3" type="button"></button></li>
+                <li><button id="choice-4" type="button"></button></li>
+            </ol>
+            <hr>
+            <p id="answerOutput"></p>
+        </div>
+
+        <!--Final score div-->
+        <div id="finalScoreDiv">
+            <h2>All Done!</h2>
+            <p>Your final score is: <span id="score"></span></p>
+            <form>
+                <p>Enter your initails: <input type="text" id="initials"></p>
+                <button type="sumbit" id="submitScore">Submit</button>
+            </form>
+        </div>
+
+        <!--highscore div-->
+        <div id="highScoresDiv">
+            <h2>High Scores</h2>
+            <div id="scorelist"></div>
+            <button type="submit" id="goBack">Go Back</button>
+            <button type="submit" id="clearScores">Clear High Scores</button>
+        </div>
+    </main>
+
+    <script src="js/questions.js"></script>
+    <!-- <script src="js/quiz.js"></script> -->
+</body>
+</html>
