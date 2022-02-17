@@ -1,5 +1,5 @@
 var questions = [
-    {   //question 0
+    {  
         title: "Commonly used data types DO NOT include:",
         choices: [
             "strings",
@@ -9,7 +9,7 @@ var questions = [
         ],
         answer: "alerts"
     },
-    {
+    {  
         title: "The condition in an if / else statement is enclosed within ____.",
         choices: [
             "quotes",
@@ -90,7 +90,7 @@ var clearBtn = document.getElementById("clearScore");
 var questionIndex = 0;
 var timeLeft = 100;
 var timeInterval = 0;
-var scoreIni = 0;
+var scoreIni= 0;
 // 
 function startQuiz() {
     introEl.style.dispaly = "block";
@@ -119,26 +119,35 @@ function renderQuestion() {
         choice3Btn.textContent = questions[questionIndex].choices[2];
         choice4Btn.textContent = questions[questionIndex].choices[3];
     };
-    // console.log("test");
 };
 
-// still working on check answer question
-function answerCheck(answer) {
-    if (questions[questionIndex].answer === questions[questionIndex].choices[answer]) {
+
+
+function answerCheck(event) {
+    if (event.value === questions[questionIndex].answer) {
         answerCheck.textContent = "Correct!";
     } else {
-        answerCheck.textContent = "Wrong!";
-    };
+        answerCheck.textContent = "Wrong";
+        timeLeft = timeLeft - 10;
+    }
     questionIndex++;
     if (questionIndex < questions.length) {
         nextQuestion();
     } else {
         return;
+    }
+}
+
+function nextQuestion() {
+    for (questionIndex = 1; questionIndex < questions.length; questionIndex++) {
+        questionTitle.textContent = questions[questionIndex].title;
+        choice1Btn.textContent = questions[questionIndex].choices[0];
+        choice2Btn.textContent = questions[questionIndex].choices[1];
+        choice3Btn.textContent = questions[questionIndex].choices[2];
+        choice4Btn.textContent = questions[questionIndex].choices[3];
     };
-};
+}
 
 
 startBtn.addEventListener("click", startQuiz);
 
-
-startBtn.addEventListener("click", startQuiz);
