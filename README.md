@@ -24,5 +24,5 @@ A time limited multiple-choice coding quiz that run in the browser.
 ## Deployed Link
 [Link](https://carolyvn.github.io/code-quiz/)
 ## Demo
-![Screen Shot 2022-06-03 at 11 45 36 PM](https://user-images.githubusercontent.com/90424035/171988367-03395cb1-396e-400a-b76d-2b1b85c0e1ea.png)
+![Code Quiz](https://user-images.githubusercontent.com/90424035/171989957-691343a9-e65f-456e-91a4-327faf1afc37.gif)
 
