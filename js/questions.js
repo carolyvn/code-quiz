@@ -114,10 +114,11 @@ function renderQuestion() {
 };
 
 function answerCheck(event) {
+    var element = event.target;
 
-    if (questions[questionIndex].answer === event.target.value) {
+    if (element.textContent == questions[questionIndex].answer) {
         answerOutput.textContent = "Correct!";
-        score++;
+        score += 5;
     } else {
         timeLeft = timeLeft - 10;
         answerOutput.textContent = "Wrong! Correct answer is " + questions[questionIndex].answer;
@@ -143,6 +144,7 @@ function allDone() {
     introDiv.style.display = "none";
     quizDiv.style.display = 'none';
     scoreEl.textContent = score;
+    console.log(score);
 }
 
 function storeScore(event) {
@@ -153,32 +155,38 @@ function storeScore(event) {
     // }
     var scoreArray = [];
     var userScore = {
-        initials: initialsEl.value,
+        initial: initialsEl.value,
         score: score,
     };
 
-    scoreArray.push(userScore);
-    window.localStorage.setItem('highScores', JSON.stringify(scoreArray));
+    var userScored = JSON.stringify(userScore)
+    console.log(userScored);
 
-    window.redirect('/');
+    scoreArray.push(userScored);
+    localStorage.setItem('highScore', scoreArray);
+    console.log(highScore);
+
+    showHighScore();
 }
     
 function showHighScore() {
-    highScoresDiv.style.display = 'block';
     introDiv.style.display = 'none',
-        scoreDiv.style.display = 'none';
+    scoreDiv.style.display = 'none';
+    highScoresDiv.display = 'block';
 
-    var savedScore = localStorage.getItem('highScores');
 
-    if (savedScore === null) {
+    var savedScore = localStorage.getItem('highScore');
+    var storedHighScore = JSON.parse(savedScore);
+    console.log(storedHighScore);
+
+    if (storedHighScore === null) {
         return;
     }
 
-    var storedHighScore = JSON.parse(savedScore);
-
     for (var i = 0; i < storedHighScore.length; i++) {
         var list = document.createElement('li');
-        list.innerHTML = history.initials + ": " + history.score;
+        list.textContent = storedHighScore(i);
+        console.log(list);
         scorelistEl.appendChild(list);
 
     }
@@ -194,12 +202,13 @@ submitBtn.addEventListener('click', storeScore);
 
 viewHighScore.addEventListener('click',function() {
     introDiv.style.display = 'none';
-    highScoresDiv.style.display = 'block';
+    highScoresDiv = 'block';
+    showHighScore();
 });
 
 goBackBtn.addEventListener('click', function () {
     introDiv.style.display = 'block';
-    highScoresDiv.style.display = 'none';
+    highScoresDiv = 'none';
 });
 
 clearBtn.addEventListener('click', function () {
