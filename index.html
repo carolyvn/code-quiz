@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="" id="viewHighScore">View Highscores</a>
+        <a href="#highScoreDiv" id="viewHighScore">View Highscores</a>
         <p id="currentTime">Times: <span id="timer"></span></p>   
     </header>
 
@@ -26,30 +26,33 @@
         <!--Quiz div-->
         <div id="quizDiv">
             <h2 id="questionTitle"></h2>
-            <ol id="choices">
-                <li><button id="choice-1" type="button"></button></li>
-                <li><button id="choice-2" type="button"></button></li>
-                <li><button id="choice-3" type="button"></button></li>
-                <li><button id="choice-4" type="button"></button></li>
-            </ol>
+            <ul id="choicesUl">
+                <li><button class="choices" id="choice1" type="button"></button></li>
+                <li><button class="choices" id="choice2" type="button"></button></li>
+                <li><button class="choices" id="choice3" type="button"></button></li>
+                <li><button class="choices" id="choice4" type="button"></button></li>
+            </ul>
             <hr>
             <p id="answerOutput"></p>
         </div>
 
-        <!--Final score div-->
-        <div id="finalScoreDiv">
+        <!--Score div-->
+        <div id="scoreDiv">
             <h2>All Done!</h2>
-            <p>Your final score is: <span id="score"></span></p>
+            <p> Your final score is: <span id="score"></span></p>
             <form>
-                <p>Enter your initails: <input type="text" id="initials"></p>
-                <button type="sumbit" id="submitScore">Submit</button>
+                <label for="iniitials">Enter your initails:<label>
+                <input type="text" id="initials"></p>
+                <button type="sumbit" id="submitBtn">Submit</button>
             </form>
         </div>
 
-        <!--highscore div-->
+        <!--Highscore div-->
         <div id="highScoresDiv">
             <h2>High Scores</h2>
-            <div id="scorelist"></div>
+            <ul id="scoreList">
+
+            </ul>
             <button type="submit" id="goBack">Go Back</button>
             <button type="submit" id="clearScores">Clear High Scores</button>
         </div>

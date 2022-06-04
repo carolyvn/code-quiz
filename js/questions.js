@@ -1,5 +1,5 @@
 var questions = [
-    {  
+    {
         title: "Commonly used data types DO NOT include:",
         choices: [
             "strings",
@@ -9,7 +9,7 @@ var questions = [
         ],
         answer: "alerts"
     },
-    {  
+    {
         title: "The condition in an if / else statement is enclosed within ____.",
         choices: [
             "quotes",
@@ -49,59 +49,54 @@ var questions = [
         ],
         answer: "console.log"
     },
-    {
-        title: "Inside which HTML element do we put the JavaScript",
-        choices: [
-            "<javascript>",
-            "<js>",
-            "<script>",
-            "<java>"
-        ],
-        answer: "<script>"
-    },
 ];
 
 // variables
 var timer = document.getElementById("timer");
-var container = document.getElementsByClassName("#container");
-var introEl = document.getElementById("introDiv");
-var quizEl = document.getElementById("quizDiv");
+var container = document.getElementsByClassName("container");
+var introDiv = document.getElementById("introDiv");
+var quizDiv = document.getElementById("quizDiv");
+var scoreDiv = document.getElementById("scoreDiv");
+var highScoresDiv = document.getElementById("highScoreDiv");
+
+
 var questionTitle = document.getElementById("questionTitle");
-var choicesEl =document.getElementById("choices");
+var choicesUl = document.getElementById("choicesUl");
 var answerOutput = document.getElementById("answerOutput");
-var finalEl = document.getElementById("finalScoreDiv");
+
 var scoreEl = document.getElementById("score");
 var initialsEl = document.getElementById("initials");
-var highscoreEl = document.getElementById("highScoreDiv");
 var scorelistEl = document.getElementById("scorelist");
 
 // buttons
 var startBtn = document.getElementById("start");
-var choiceBtn = document.querySelectorAll("button.choiceBtn");
-var choice1Btn = document.getElementById("choice-1");
-var choice2Btn = document.getElementById("choice-2");
-var choice3Btn = document.getElementById("choice-3");
-var choice4Btn = document.getElementById("choice-4");
-var submitBtn = document.getElementById("submitScore");
+// var choiceBtn = document.querySelectorAll("button.choiceBtn");
+var choice1Btn = document.getElementById("choice1");
+var choice2Btn = document.getElementById("choice2");
+var choice3Btn = document.getElementById("choice3");
+var choice4Btn = document.getElementById("choice4");
+var submitBtn = document.getElementById("submitBtn");
 var backBtn = document.getElementById("goBack");
 var clearBtn = document.getElementById("clearScore");
 
-// 
+
 var questionIndex = 0;
 var timeLeft = 100;
 var timeInterval = 0;
-var scoreIni= 0;
+var score = 0;
 // 
 function startQuiz() {
-    introEl.style.dispaly = "block";
-    quizEl.style.display = "none";
+    introDiv.style.dispaly = "none";
+    quizDiv.style.display = "block";
     timer.textContent = "Times: " + timeInterval + "s";
     if (timeInterval === 0) {
-        timeInterval = setInterval(function(){
-            timeLeft--;
+        timeInterval = setInterval(function () {
             timer.textContent = "Times: " + timeLeft + "s";
+            timeLeft--;
+
             if (timeLeft <= 0) {
                 clearInterval(timeInterval);
+                allDone();
                 timer.textContent = "Times Up!";
             }
         }, 1000)
@@ -110,44 +105,103 @@ function startQuiz() {
 };
 
 function renderQuestion() {
-    introEl.style.display = "none";
-    quizEl.style.display = "block";
-    for (questionIndex = 0; questionIndex < questions.length; questionIndex++) {
-        questionTitle.textContent = questions[questionIndex].title;
-        choice1Btn.textContent = questions[questionIndex].choices[0];
-        choice2Btn.textContent = questions[questionIndex].choices[1];
-        choice3Btn.textContent = questions[questionIndex].choices[2];
-        choice4Btn.textContent = questions[questionIndex].choices[3];
-    };
+    introDiv.style.display = 'none';
+    questionTitle.textContent = questions[questionIndex].title;
+    choice1Btn.textContent = questions[questionIndex].choices[0];
+    choice2Btn.textContent = questions[questionIndex].choices[1];
+    choice3Btn.textContent = questions[questionIndex].choices[2];
+    choice4Btn.textContent = questions[questionIndex].choices[3];
+};
+
+choice1Btn.addEventListener('click', answerCheck);
+choice2Btn.addEventListener('click', answerCheck);
+choice3Btn.addEventListener('click', answerCheck);
+choice4Btn.addEventListener('click', answerCheck);
+
+function answerCheck(event) {
+    
+    if (questions[questionIndex].answer === event.target.value) {
+        score++;
+        answerOutput.textContent = "Correct!";
+    } else {
+        timeLeft = timeLeft - 10;
+        answerOutput.textContent = "Wrong! Correct answer is " + questions[questionIndex].answer;
+    }
+
+    questionIndex++;
+
+    if (questionIndex< questions.length) {
+        renderQuestion();
+    } else {
+        allDone();
+    }    
 };
 
 
+function allDone() {
+    scoreDiv.style.display = "block";
+    introDiv.style.display = "none";
+    quizDiv.style.display = 'none';
+    scoreEl.textContent = score;
+}
 
-function answerCheck(event) {
-    if (event.value === questions[questionIndex].answer) {
-        answerCheck.textContent = "Correct!";
-    } else {
-        answerCheck.textContent = "Wrong";
-        timeLeft = timeLeft - 10;
+function storeScore(event) {
+    event.preventDefault();
+    if (initialsEl.value === ''); {
+        alert('Please enter your initials');
     }
-    questionIndex++;
-    if (questionIndex < questions.length) {
-        nextQuestion();
-    } else {
+
+    var scoreArray = [];
+    var userScore = {
+        initials: initialsEl.value,
+        score: scoreEl.textContent
+    };
+
+    scoreArray.push(userScore);
+    window.localStorage.setItem('highScores', JSON.stringify(scoreArray));
+
+    showHighScore();
+
+}
+
+function showHighScore() {
+    highScoresDiv.style.display = 'block';
+    introDiv.style.display = 'none',
+    scoreDiv.style.display = 'none';
+
+    var savedScore = localStorage.getItem('highScores');
+
+    if (savedScore === null) {
         return;
     }
+
+    var storedHighScore =JSON.parse(savedScore);
+
+    for (var i = 0; i < storedHighScore.length; i++) {
+        var list = document.createElement('li');
+        list.innerHTML = history.initials + ": " + history.score;
+        scorelistEl.appendChild(list);
+
+    }
 }
 
-function nextQuestion() {
-    for (questionIndex = 1; questionIndex < questions.length; questionIndex++) {
-        questionTitle.textContent = questions[questionIndex].title;
-        choice1Btn.textContent = questions[questionIndex].choices[0];
-        choice2Btn.textContent = questions[questionIndex].choices[1];
-        choice3Btn.textContent = questions[questionIndex].choices[2];
-        choice4Btn.textContent = questions[questionIndex].choices[3];
-    };
-}
+
+
 
 
 startBtn.addEventListener("click", startQuiz);
 
+submitBtn.addEventListener('click', storeScore);
+
+// viewHighScore.addEventListener('click',);
+
+goBackBtn.addEventListener('click', function() {
+    introDiv.style.display = 'block';
+    highScoresDiv.style.display = 'none';
+});
+
+clearBtn.addEventListener('click', function() {
+    window.localStorage.removeItem('');
+    scorelistEl.innerHTML = '';
+
+})

@@ -29,7 +29,6 @@ a:hover {
 
 #currentTime{
     float: right;
-
 }
 
 .container {
@@ -42,7 +41,7 @@ a:hover {
 }
 
 #quizDiv,
-#finalScoreDiv,
+#scoreDiv,
 #highScoresDiv {
     display: none;
 }
@@ -81,8 +80,11 @@ p {
     padding: 10px;
 }
 
-#choice li button{
-    font-size: 30px;
+#choices,
+li,
+button{
+    font-size: 20px;
+    margin: 5px;
 }
 
 
